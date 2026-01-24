@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('seats', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+    Schema::create('seats', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('room_id')->constrained('rooms')->onDelete('cascade');
+    $table->string('seat_code');
+    $table->enum('seat_type', ['normal', 'vip','couple'])->default('normal');
+    $table->timestamps();
+});
+
     }
 
     /**

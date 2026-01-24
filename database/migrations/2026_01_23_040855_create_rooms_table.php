@@ -9,13 +9,19 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('rooms', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+public function up(): void
+{
+    Schema::create('rooms', function (Blueprint $table) {
+        $table->id();
+        
+        // Nối thống nhất đến bảng theaters
+        $table->foreignId('theater_id')->constrained('theaters')->onDelete('cascade');
+
+        $table->string('name');
+        $table->integer('total_seats');
+        $table->timestamps();
+    });
+}
 
     /**
      * Reverse the migrations.

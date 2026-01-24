@@ -10,12 +10,22 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::create('showtimes', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+{
+    Schema::create('showtimes', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('movie_id')->constrained('movies')->onDelete('cascade');
+        // Phải là theaters chứ không được là cinemas
+        $table->foreignId('theater_id')->constrained('theaters')->onDelete('cascade'); 
+        $table->foreignId('room_id')->constrained('rooms')->onDelete('cascade');
+        $table->foreignId('screening_type_id')
+          ->constrained('screening_types')
+          ->cascadeOnDelete();
+        $table->date('show_date');
+        $table->time('start_time');
+        $table->time('end_time');
+        $table->timestamps();
+    });
+}
 
     /**
      * Reverse the migrations.
