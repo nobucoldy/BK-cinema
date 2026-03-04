@@ -172,5 +172,105 @@ class MoviesTableSeeder extends Seeder
             ],
         ]);
 
-       
+        // Attach Actors & Genres to Movies (Many-to-Many)
+        $movies = Movie::all();
+        $actors = Actor::all();
+        $genres = Genre::all();
+
+        // Movie 1: Avatar - Actors: 1,2,3 | Genres: 1,2,3
+        if ($movies->count() > 0 && $actors->count() > 0) {
+            $movies[0]->actors()->sync([1, 2, 3]);
+        }
+        if ($movies->count() > 0 && $genres->count() > 0) {
+            $movies[0]->genres()->sync([1, 2, 3]);
+        }
+
+        // Movie 2: Zootopia - Actors: 4,5,6 | Genres: 4,5,2
+        if ($movies->count() > 1 && $actors->count() > 3) {
+            $movies[1]->actors()->sync([4, 5, 6]);
+        }
+        if ($movies->count() > 1 && $genres->count() > 2) {
+            $movies[1]->genres()->sync([4, 5, 2]);
+        }
+
+        // Movie 3: Tom & Jerry - Actors: 7,8 | Genres: 4,2,6
+        if ($movies->count() > 2 && $actors->count() > 6) {
+            $movies[2]->actors()->sync([7, 8]);
+        }
+        if ($movies->count() > 2 && $genres->count() > 3) {
+            $movies[2]->genres()->sync([4, 2, 6]);
+        }
+
+        // Movie 4: Truy tim Long - Actors: 9,10 | Genres: 5,3
+        if ($movies->count() > 3 && $actors->count() > 8) {
+            $movies[3]->actors()->sync([9, 10]);
+        }
+        if ($movies->count() > 3 && $genres->count() > 1) {
+            $movies[3]->genres()->sync([5, 3]);
+        }
+
+        // Movie 5: Now You See Me - Actors: 11,12,13 | Genres: 3,7,6
+        if ($movies->count() > 4 && $actors->count() > 10) {
+            $movies[4]->actors()->sync([11, 12, 13]);
+        }
+        if ($movies->count() > 4 && $genres->count() > 3) {
+            $movies[4]->genres()->sync([3, 7, 6]);
+        }
+
+        // Movie 6: Thien Duong Mau - Actors: 14,15 | Genres: 3,7
+        if ($movies->count() > 5 && $actors->count() > 13) {
+            $movies[5]->actors()->sync([14, 15]);
+        }
+        if ($movies->count() > 5 && $genres->count() > 2) {
+            $movies[5]->genres()->sync([3, 7]);
+        }
+
+        // Movie 7: Hoang Tu Quy - Actors: 16 | Genres: 8
+        if ($movies->count() > 6 && $actors->count() > 15) {
+            $movies[6]->actors()->sync([16]);
+        }
+        if ($movies->count() > 6 && $genres->count() > 7) {
+            $movies[6]->genres()->sync([8]);
+        }
+
+        // Movie 8: SpongeBob - Actors: 17,18 | Genres: 5,4,2
+        if ($movies->count() > 7 && $actors->count() > 16) {
+            $movies[7]->actors()->sync([17, 18]);
+        }
+        if ($movies->count() > 7 && $genres->count() > 2) {
+            $movies[7]->genres()->sync([5, 4, 2]);
+        }
+
+        // Movie 9: Demon Slayer - Actors: 19,20,21 | Genres: 3
+        if ($movies->count() > 8 && $actors->count() > 18) {
+            $movies[8]->actors()->sync([19, 20, 21]);
+        }
+        if ($movies->count() > 8 && $genres->count() > 0) {
+            $movies[8]->genres()->sync([3]);
+        }
+
+        // Movie 10: The Smurfs - Actors: 22,23 | Genres: 4,5,2
+        if ($movies->count() > 9 && $actors->count() > 21) {
+            $movies[9]->actors()->sync([22, 23]);
+        }
+        if ($movies->count() > 9 && $genres->count() > 2) {
+            $movies[9]->genres()->sync([4, 5, 2]);
+        }
+
+        // Movie 11: Dragon Ball - Actors: 24,25 | Genres: 3,4
+        if ($movies->count() > 10 && $actors->count() > 23) {
+            $movies[10]->actors()->sync([24, 25]);
+        }
+        if ($movies->count() > 10 && $genres->count() > 3) {
+            $movies[10]->genres()->sync([3, 4]);
+        }
+
+        // Movie 12: Con ke ba nghe - Actors: 26,27 | Genres: 5,9,10
+        if ($movies->count() > 11 && $actors->count() > 25) {
+            $movies[11]->actors()->sync([26, 27]);
+        }
+        if ($movies->count() > 11 && $genres->count() > 8) {
+            $movies[11]->genres()->sync([5, 9, 10]);
+        }
+    }
 }
