@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 use App\Models\Booking;
 use App\Models\User;
 use App\Models\Showtime;
-use Illuminate\Support\Str;
 
 class BookingSeeder extends Seeder
 {
