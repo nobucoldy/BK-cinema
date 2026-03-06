@@ -208,6 +208,84 @@
             </div>
         </div>
     </div>
+
+    {{-- BOOKING HISTORY --}}
+    <div class="card mb-4 shadow-sm border-0">
+        <div class="card-header card-header-custom d-flex justify-content-between align-items-center">
+            <span>🎫 Recent Bookings</span>
+            <a href="{{ route('booking.history') }}" class="btn btn-sm btn-outline-dark">
+                View All <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+        <div class="card-body">
+            @if($user->bookings->count() > 0)
+                <div class="row">
+                    @foreach($user->bookings as $booking)
+                        <div class="col-md-6 mb-3">
+                            <div class="booking-item border rounded p-3 bg-light">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <h6 class="mb-1 text-primary">{{ $booking->showtime->movie->title }}</h6>
+                                        <small class="text-muted">
+                                            <i class="bi bi-calendar"></i> {{ \Carbon\Carbon::parse($booking->showtime->show_date)->format('d/m/Y') }}
+                                            <i class="bi bi-clock ms-2"></i> {{ \Carbon\Carbon::parse($booking->showtime->start_time)->format('H:i') }}
+                                        </small>
+                                    </div>
+                                    <div class="text-end">
+                                        @if($booking->status == 'confirmed')
+                                            <span class="badge bg-success">Confirmed</span>
+                                        @elseif($booking->status == 'pending')
+                                            <span class="badge bg-warning text-dark">Pending</span>
+                                        @else
+                                            <span class="badge bg-danger">Canceled</span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="mb-2">
+                                    <small class="text-muted">
+                                        <i class="bi bi-geo-alt"></i> {{ $booking->showtime->room->name }}
+                                    </small>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <small class="text-muted">
+                                            <i class="bi bi-ticket-perforated"></i>
+                                            @foreach($booking->bookingSeats as $seat)
+                                                <span class="badge bg-info">{{ $seat->seat->seat_code }}</span>
+                                            @endforeach
+                                        </small>
+                                    </div>
+                                    <div class="text-end">
+                                        <strong class="text-danger">{{ number_format($booking->total_amount) }} đ</strong>
+                                        <br>
+                                        <small class="text-muted">{{ \Carbon\Carbon::parse($booking->created_at)->diffForHumans() }}</small>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <a href="{{ route('booking.show', $booking->id) }}" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-eye"></i> View Details
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="text-center py-4">
+                    <i class="bi bi-ticket-perforated text-muted" style="font-size: 3rem;"></i>
+                    <h5 class="text-muted mt-2">No bookings yet</h5>
+                    <p class="text-muted">Your booking history will appear here</p>
+                    <a href="{{ route('movies.index') }}" class="btn btn-primary">
+                        <i class="bi bi-film"></i> Book Tickets Now
+                    </a>
+                </div>
+            @endif
+        </div>
+    </div>
+
 </div>
 
 {{-- CHANGE PASSWORD MODAL --}}

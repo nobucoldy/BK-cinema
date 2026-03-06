@@ -92,7 +92,7 @@
 </div>
 <div class="theaters-page">
     <div class="container">
-        <h2 class="page-title text-center">BKL Cinema System</h2>
+        <h2 class="page-title text-center">BK Cinema System</h2>
         
         <div class="filter-section d-flex align-items-center justify-content-between flex-wrap shadow-sm">
             <div class="d-flex align-items-center mb-2 mb-md-0">

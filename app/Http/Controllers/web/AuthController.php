@@ -49,7 +49,7 @@ class AuthController extends Controller
 
             // If USER → user page
             return redirect('/')
-                ->with('success', "Hello {$user->name}, welcome to BKL Cinema!");
+                ->with('success', "Hello {$user->name}, welcome to BK Cinema!");
         }
 
 

@@ -38,8 +38,11 @@ Route::get('/movies/{id}', [MovieController::class, 'show'])->name('movies.show'
 
 // --- BOOKING ---
 Route::middleware('auth')->group(function () {
-    
+
     Route::get('/booking/combo', [BookingController::class, 'combo'])->name('booking.combo');
+    Route::get('/booking-history', [BookingController::class, 'history'])->name('booking.history');
+    Route::get('/booking/{id}/detail', [BookingController::class, 'show'])->name('booking.show');
+    Route::post('/booking/{id}/cancel', [BookingController::class, 'cancel'])->name('booking.cancel');
     Route::get('/booking/{showtimeId}', [BookingController::class, 'create'])->name('booking.create');
     Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
 });

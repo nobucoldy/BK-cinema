@@ -26,7 +26,7 @@ class DashboardController extends Controller
         
         $totalBookings = Booking::count();
         $confirmedBookings = Booking::where('status', 'confirmed')->count();
-        $cancelledBookings = Booking::where('status', 'cancelled')->count();
+        $canceledBookings = Booking::where('status', 'canceled')->count();
         
         $totalUsers = User::count();
         $activeUsers = User::where('role', 'user')->count();
@@ -86,7 +86,7 @@ class DashboardController extends Controller
             'totalShowtimes',
             'totalBookings',
             'confirmedBookings',
-            'cancelledBookings',
+            'canceledBookings',
             'totalUsers',
             'activeUsers',
             'totalRevenue',

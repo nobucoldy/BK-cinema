@@ -39,33 +39,38 @@ class UserController extends Controller
 
     // 3️⃣ Lưu user mới
     public function store(Request $request)
-{
-    $request->validate([
-        'name'     => 'required|string|max:255',
-        'email'    => 'required|email|unique:users,email',
-        'phone'    => ['nullable','regex:/^\+?[0-9\s\-]{9,15}$/'], // optional, hỗ trợ +84
-        'password' => 'required|string|min:6',
-        'role'     => 'required|in:user,admin',
-    ]);
+    {
+        $request->validate([
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|email|unique:users,email',
+            'phone'    => ['nullable','regex:/^\+?[0-9\s\-]{9,15}$/'], // optional, hỗ trợ +84
+            'password' => 'required|string|min:6',
+            'role'     => 'required|in:user,admin',
+        ]);
 
-    User::create([
-        'name'     => $request->name,
-        'email'    => $request->email,
-        'phone'    => $request->phone,
-        'role'     => $request->role,
-        'password' => bcrypt($request->password),
-    ]);
+        User::create([
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'phone'    => $request->phone,
+            'role'     => $request->role,
+            'password' => bcrypt($request->password),
+        ]);
 
-    return redirect()->route('admin.users.index')
-        ->with('success', 'Account added successfully');
-}
+        return redirect()->route('admin.users.index')
+            ->with('success', 'Account added successfully');
+    }
 
 
 
     // 4️⃣ View details
     public function show($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::with([
+            'bookings.showtime.movie',
+            'bookings.showtime.room',
+            'bookings.bookingSeats.seat'
+        ])->findOrFail($id);
+        
         return view('admin.users.show', compact('user'));
     }
 

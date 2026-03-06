@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Movie Reviews - BKL Cinema')
+@section('title', 'Movie Reviews - BK Cinema')
 
 @section('content')
 <style>
@@ -126,7 +126,7 @@
                             @elseif($review->movie && $review->movie->poster_url)
                                 <img src="{{ asset('storage/' . $review->movie->poster_url) }}" alt="{{ $review->movie->title }}">
                             @else
-                                <img src="https://via.placeholder.com/400x400?text=BKL+Cinema" alt="No Image">
+                                <img src="https://via.placeholder.com/400x400?text=BK+Cinema" alt="No Image">
                             @endif
                         </div>
                         <div class="title-small">{{ $review->title }}</div>

@@ -19,7 +19,7 @@
              width="30"
              height="30"
              class="me-2 rounded-circle">
-        BKL Cinema Admin
+        BK Cinema Admin
     </a>
 
     <div class="d-flex align-items-center">

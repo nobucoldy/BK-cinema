@@ -108,9 +108,9 @@
     </div>
     <div class="col-md-4">
         <div class="stat-card red">
-            <h6>❌ Cancelled</h6>
-            <div class="stat-value">{{ $cancelledBookings }}</div>
-            <div class="stat-label">{{ $totalBookings > 0 ? round($cancelledBookings/$totalBookings*100) : 0 }}% cancellation</div>
+            <h6>❌ Canceled</h6>
+            <div class="stat-value">{{ $canceledBookings }}</div>
+            <div class="stat-label">{{ $totalBookings > 0 ? round($canceledBookings/$totalBookings*100) : 0 }}% cancellation</div>
         </div>
     </div>
 </div>

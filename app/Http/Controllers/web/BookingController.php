@@ -12,6 +12,55 @@ use Illuminate\Support\Facades\DB;
 class BookingController extends Controller
 {
     /**
+     * Hiển thị lịch sử đặt vé của user
+     */
+    public function history(Request $request)
+    {
+        $query = auth()->user()->bookings()->with(['showtime.movie', 'showtime.room']);
+
+        // 🔍 Search movie
+        if ($request->filled('keyword')) {
+            $query->whereHas('showtime.movie', function ($q) use ($request) {
+                $q->where('title', 'like', '%' . $request->keyword . '%');
+            });
+        }
+
+        // 🎯 Filter status
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $bookings = $query
+            ->orderByDesc('created_at')
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('booking.history', compact('bookings'));
+    }
+
+    /**
+     * Hiển thị chi tiết một đặt vé
+     */
+    public function show($id)
+    {
+        $booking = Booking::with([
+            'user',
+            'showtime.movie',
+            'showtime.theater',
+            'showtime.room',
+            'showtime.screeningType',
+            'bookingSeats.seat'
+        ])->findOrFail($id);
+
+        // Kiểm tra user có quyền xem booking này không
+        if ($booking->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized access');
+        }
+
+        return view('booking.show', compact('booking'));
+    }
+
+    /**
      * Hiển thị trang chọn ghế cho một suất chiếu
      */
     public function create($showtimeId)
@@ -114,6 +163,44 @@ class BookingController extends Controller
                 'success' => false,
                 'message' => 'An error occurred: ' . $e->getMessage()
             ], 500);
+        }
+    }
+
+    /**
+     * Hủy đặt vé
+     */
+    public function cancel($id)
+    {
+        try {
+            // Check if user is authenticated
+            if (!auth()->check()) {
+                \Log::warning('Unauthenticated cancel attempt for booking ' . $id);
+                return redirect()->route('login')->with('error', 'Please login to cancel booking');
+            }
+
+            \Log::info('Cancel method called for booking ID: ' . $id . ' by user: ' . auth()->id());
+
+            $booking = Booking::findOrFail($id);
+
+            // Kiểm tra user có quyền hủy booking này không
+            if ($booking->user_id !== auth()->id()) {
+                \Log::warning('Unauthorized cancel attempt for booking ' . $id . ' by user ' . auth()->id());
+                abort(403, 'Unauthorized access');
+            }
+
+            // Kiểm tra booking có thể hủy không
+        if ($booking->status === 'canceled') {
+            \Log::info('Booking ' . $id . ' is already canceled');
+            return redirect()->back()->with('info', 'This booking is already canceled');
+        }
+
+        $booking->update(['status' => 'canceled']);
+        \Log::info('Booking ' . $id . ' canceled successfully');
+
+        return redirect()->back()->with('success', 'Booking canceled successfully');
+        } catch (\Exception $e) {
+            \Log::error('Error cancelling booking ' . $id . ': ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Failed to cancel booking: ' . $e->getMessage());
         }
     }
 }

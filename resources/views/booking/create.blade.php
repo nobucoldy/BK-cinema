@@ -4,7 +4,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Tickets - BKL Cinema</title>
+    <title>Book Tickets - BK Cinema</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -111,7 +111,7 @@
         <div class="ticket-header">
             <img src="{{ Storage::url($showtime->movie->poster_url) }}" class="movie-poster">
             <div class="flex-grow-1">
-                <div style="color: #d63384; font-weight: 600;">BKL CINEMA HÀ ĐÔNG</div>
+                <div style="color: #d63384; font-weight: 600;">BK CINEMA HÀ ĐÔNG</div>
                 <h2 class="movie-title">{{ $showtime->movie->title }}</h2>
                 <div style="margin-top: 10px; font-size: 0.9rem; color: #666;">
                     @if($showtime->movie->director)
@@ -326,7 +326,7 @@
                 <div class="p-4 flex-grow-1 bg-white border-end">
                     <h5 class="fw-bold mb-4">BOOKING CONFIRMATION</h5>
                     <p class="mb-1 small">Movie: <strong>{{ $showtime->movie->title }}</strong></p>
-                    <p class="mb-1 small">Theater: <strong>BKL Cinema Ha Dong</strong></p>
+                    <p class="mb-1 small">Theater: <strong>BK Cinema Ha Dong</strong></p>
                     <p class="mb-4 small">Showtime: <strong>{{ \Carbon\Carbon::parse($showtime->start_time)->format('H:i') }} | {{ \Carbon\Carbon::parse($showtime->show_date)->format('d/m/Y') }}</strong></p>
 
                     <h6 class="fw-bold border-bottom pb-2 mb-3">Selected Seats</h6>
@@ -389,7 +389,7 @@
     <div class="success-box-popup">
         <div style="font-size: 6rem; margin-bottom: 20px;">🎟️</div>
         <h2 style="font-weight: 900; color: #000; margin-bottom: 15px; letter-spacing: -2px; text-transform: uppercase;">Booking Successful!</h2>
-        <p style="color: #000; font-weight: 600; font-size: 1.1rem; margin-bottom: 35px; line-height: 1.5;">Thank you for choosing BKL Cinema. We wish you an amazing movie experience!</p>
+        <p style="color: #000; font-weight: 600; font-size: 1.1rem; margin-bottom: 35px; line-height: 1.5;">Thank you for choosing BK Cinema. We wish you an amazing movie experience!</p>
         <button onclick="location.href='/movies/status'" style="background: #000; border: none; padding: 18px 50px; border-radius: 20px; color: #90ff00; font-weight: 800; font-size: 1rem; cursor: pointer; transition: 0.3s; width: 100%;">OK!</button>
     </div>
 </div>

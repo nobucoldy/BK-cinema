@@ -24,7 +24,7 @@ class BookingController extends Controller
             });
         }
 
-        // 🎯 Filter status (pending, confirmed, cancelled, expired)
+        // 🎯 Filter status (pending, confirmed, canceled, expired)
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
@@ -55,6 +55,6 @@ class BookingController extends Controller
         $booking = Booking::findOrFail($id);
         $booking->update(['status' => 'canceled']);
 
-        return redirect()->back()->with('success', 'Booking cancelled');
+        return redirect()->back()->with('success', 'Booking canceled');
     }
 }

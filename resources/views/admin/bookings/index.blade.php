@@ -29,9 +29,9 @@
                     Confirmed
                 </option>
 
-                <option value="cancelled"
-                    {{ request('status')=='cancelled'?'selected':'' }}>
-                    Cancelled
+                <option value="canceled"
+                    {{ request('status')=='canceled'?'selected':'' }}>
+                    Canceled
                 </option>
             </select>
         </div>
@@ -89,7 +89,7 @@
                             @elseif($b->status == 'pending')
                                 <span class="badge bg-warning text-dark">Pending</span>
                             @else
-                                <span class="badge bg-danger">Cancelled</span>
+                                <span class="badge bg-danger">Canceled</span>
                             @endif
                         </td>
 

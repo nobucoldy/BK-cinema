@@ -12,9 +12,15 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        return view('profile.index', [
-            'user' => Auth::user()
+        $user = Auth::user()->load([
+            'bookings' => function($q) {
+                $q->with(['showtime.movie', 'showtime.room', 'bookingSeats.seat'])
+                  ->orderByDesc('created_at')
+                  ->limit(10); // Chỉ lấy 10 booking gần nhất
+            }
         ]);
+
+        return view('profile.index', compact('user'));
     }
 
     public function updateInfo(Request $request)

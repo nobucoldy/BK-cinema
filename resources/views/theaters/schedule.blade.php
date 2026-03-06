@@ -153,7 +153,7 @@
                         <a href="{{ url()->current() }}?theater_id={{ $t->id }}&city={{ request('city') }}" 
                            class="theater-item {{ $selectedTheaterId == $t->id ? 'active' : '' }}">
                             <div class="theater-logo">
-                                <img src="{{ asset('storage/logo2.jpg') }}" alt="BKL Cinema">
+                                <img src="{{ asset('storage/logo2.jpg') }}" alt="BK Cinema">
                             </div>
                             <div class="theater-info overflow-hidden">
                                 <h6 class="mb-0 fw-bold text-truncate">{{ $t->name }}</h6>

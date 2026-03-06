@@ -2,7 +2,7 @@
     <div class="container d-flex justify-content-between align-items-center">
         <a class="logo-group" href="/">
             <div class="logo-circle-footer">
-                <img src="{{ asset('storage/logo2.jpg') }}" alt="BKL Cinema Logo">
+                <img src="{{ asset('storage/logo2.jpg') }}" alt="BK Cinema Logo">
             </div>
         </a>
         <div class="social-icons">
@@ -16,7 +16,7 @@
     <div style="background: #DEFE98; padding: 40px; border-radius: 25px; text-align: center; box-shadow: 0 0 30px rgba(222, 254, 152, 0.5); border: 3px solid #000; max-width: 350px; position: relative;">
         <div style="font-size: 4rem; margin-bottom: 10px;">🤫</div>
         <h2 style="font-weight: 800; color: #000; margin-bottom: 10px;">COMING SOON</h2>
-        <p style="color: #4b5563; font-weight: 500;">BKL Cinema is working hard on this feature. See you soon!</p>
+        <p style="color: #4b5563; font-weight: 500;">BK Cinema is working hard on this feature. See you soon!</p>
         <button onclick="closeComingSoon()" style="background: #ff69b4; border: none; padding: 10px 30px; border-radius: 12px; color: white; font-weight: bold; margin-top: 15px; cursor: pointer;">OK CẬU ƠI</button>
     </div>
 </div>

@@ -2,7 +2,7 @@
     <div class="container">
         <a class="logo-group" href="/">
     <div class="logo-circle">
-        <img src="{{ asset('storage/logo2.jpg') }}" alt="BKL Cinema Logo">
+        <img src="{{ asset('storage/logo2.jpg') }}" alt="BK Cinema Logo">
     </div>
     <div class="pick-ticket">Pick A Ticket</div>
 </a>
@@ -58,6 +58,11 @@
                         <li>
                             <a class="dropdown-item" href="{{ route('profile.index') }}">
                                 👤 Account
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('booking.history') }}">
+                                🎫 Booking History
                             </a>
                         </li>
                         <li><hr class="dropdown-divider"></li>
