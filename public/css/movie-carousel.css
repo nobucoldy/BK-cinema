@@ -1,0 +1,274 @@
+/* ================================================================
+   1. KHUNG CHỨA CHUNG (NOW SHOWING & COMING SOON)
+   ================================================================ */
+.now-showing-swiper,
+.upcoming-swiper {
+    width: 100% !important;
+    padding-bottom: 50px !important;
+    position: relative;
+    overflow: visible !important;
+}
+
+/* Cho phép slide tràn ra ngoài */
+.swiper,
+.swiper-wrapper,
+.swiper-slide {
+    overflow: visible !important;
+}
+
+/* ================================================================
+   2. MOVIE CARD – HIỆU ỨNG FOCUS + HOVER (FIX CHUẨN)
+   ================================================================ */
+.movie-card-item {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.35s ease, box-shadow 0.35s ease, filter 0.35s ease;
+    will-change: transform;
+    transform-origin: center center;
+}
+
+.movie-card-item img {
+    width: 100%;
+    aspect-ratio: 2 / 3 !important;
+    object-fit: cover !important;
+    border-radius: 14px;
+    transition: box-shadow 0.35s ease;
+}
+
+/* ================================================================
+   2.1 SLIDE KHÔNG FOCUS
+   ================================================================ */
+.swiper-slide:not(.swiper-slide-active) .movie-card-item {
+    transform: scale(0.9);
+    filter: brightness(0.7);
+    z-index: 1;
+}
+
+/* ================================================================
+   2.2 SLIDE FOCUS (Ở GIỮA)
+   ================================================================ */
+.swiper-slide-active .movie-card-item {
+    transform: scale(1.15);
+    z-index: 50;
+    filter: brightness(1);
+}
+
+.swiper-slide-active .movie-card-item img {
+    box-shadow: 0 25px 50px rgba(0,0,0,0.65);
+}
+
+/* ================================================================
+   2.3 HOVER (ƯU TIÊN CAO NHẤT)
+   ================================================================ */
+.movie-card-item:hover {
+    transform: scale(1.2);
+    z-index: 100;
+    filter: brightness(1);
+}
+
+.movie-card-item:hover img {
+    box-shadow: 0 30px 60px rgba(0,0,0,0.75);
+}
+
+/* ================================================================
+   3. TÊN PHIM
+   ================================================================ */
+.movie-name {
+    margin-top: 15px;
+    font-weight: 600;
+    text-align: center;
+    height: 3em;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    color: #fff;
+}
+
+/* ================================================================
+   4. NÚT ĐIỀU HƯỚNG < >
+   ================================================================ */
+.main-prev, 
+.main-next {
+    color: #ff69b4 !important;
+}
+
+/* 2. Riêng phần Coming Soon - Ép sang màu Hồng */
+.upcoming-prev, 
+.upcoming-next {
+    color: #ff69b4 !important; /* Màu hồng thương hiệu */
+}
+.main-prev, .main-next,
+.upcoming-prev, .upcoming-next {
+    color: #ff69b4 !important;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.main-prev:hover, .main-next:hover,
+.upcoming-prev:hover, .upcoming-next:hover {
+    color: #ff1493 !important; /* Hồng đậm hơn một chút khi hover */
+    transform: scale(1.2);
+    filter: brightness(1) !important;
+}
+
+/* ================================================================
+   5. DOTS PAGINATION
+   ================================================================ */
+.now-showing-pagination,
+.upcoming-pagination,
+.hero-pagination {
+    position: absolute !important;
+    z-index: 999 !important;
+    display: flex !important;
+    justify-content: center;
+    width: 100% !important;
+}
+
+.now-showing-pagination,
+.upcoming-pagination {
+    bottom: 5px !important;
+}
+
+.swiper-pagination-bullet {
+    background: #ffffff !important;
+    opacity: 0.4;
+    width: 10px !important;
+    height: 10px !important;
+    margin: 0 5px !important;
+    display: inline-block !important;
+}
+
+.swiper-pagination-bullet-active {
+    background: #ff69b4 !important;
+    width: 30px !important;
+    border-radius: 5px !important;
+    opacity: 1 !important;
+}
+
+/* ================================================================
+   6. HERO BANNER (GIỮ NGUYÊN)
+   ================================================================ */
+.hero-slider-wrapper {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    overflow: hidden;
+}
+
+.hero-swiper-container {
+    padding-bottom: 0 !important;
+    overflow: hidden !important;
+}
+
+.hero-section {
+    width: 100%;
+    height: 80vh;
+    background-size: cover;
+    background-position: center center !important;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.hero-overlay,
+.hero-section::before,
+.hero-section::after {
+    display: none !important;
+    content: none !important;
+}
+
+.hero-pagination {
+    bottom: 20px !important;
+}
+
+/* ================================================================
+   7. KHÁC
+   ================================================================ */
+.date-btn, .time-slot { text-decoration: none !important; }
+
+.theater-list::-webkit-scrollbar { width: 4px; }
+.theater-list::-webkit-scrollbar-thumb {
+    background: #e0e0e0;
+    border-radius: 10px;
+}
+
+.active-theater {
+    background-color: #ff69b4 !important;
+    color: white !important;
+}
+
+@keyframes slideInIn {
+    from { opacity: 0; transform: translateX(100%); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes toastProgress {
+    from { width: 100%; }
+    to { width: 0%; }
+}
+/* ===== FIX CỐT LÕI FOCUS SWIPER ===== */
+.swiper {
+    overflow: visible !important;
+}
+
+.swiper-wrapper {
+    overflow: visible !important;
+}
+
+.swiper-slide {
+    width: 220px !important;   /* ❗ BẮT BUỘC */
+    transition: transform 0.35s ease, filter 0.35s ease;
+}
+
+/* Slide thường */
+.swiper-slide .movie-card-item {
+    transform: scale(0.9);
+    filter: brightness(0.7);
+}
+
+/* Slide đang focus (ở giữa) */
+.swiper-slide-active .movie-card-item {
+    transform: scale(1.15);
+    filter: brightness(1);
+    z-index: 50;
+}
+
+/* Hover vẫn zoom thêm */
+.swiper-slide-active .movie-card-item:hover {
+    transform: scale(1.2);
+}
+/* 1. NÚT ĐIỀU HƯỚNG MÀU #DEFE98 */
+    .swiper-button-next, .swiper-button-prev, .main-next, .main-prev, .upcoming-next, .upcoming-prev {
+        color: #DEFE98 !important;
+    }
+    .swiper-button-next:after, .swiper-button-prev:after { font-size: 24px !important; font-weight: bold; }
+
+    /* 2. CHẤM HỒNG (PAGINATION) */
+    .swiper-pagination-bullet { background: #ffffff !important; opacity: 0.4; }
+    .swiper-pagination-bullet-active {
+        background: #ff69b4 !important;
+        width: 30px !important;
+        border-radius: 5px !important;
+        opacity: 1 !important;
+    }
+
+    /* 3. BANNER HERO - FULL ẢNH */
+    .hero-slider-wrapper { width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; overflow: hidden; }
+    .hero-section { width: 100%; height: 80vh; background-size: cover; background-position: center !important; position: relative; }
+    .hero-overlay { display: none !important; }
+    .nav-click-area { position: absolute; top: 0; height: 100%; width: 25%; z-index: 900; cursor: pointer; }
+    .nav-prev { left: 0; } .nav-next { right: 0; }
+
+    /* 4. CHỈNH KHOẢNG CÁCH CHO SWIPER HIỆN CHẤM */
+    .mySwiper, .mySwiperUpcoming { padding-bottom: 50px !important; }
+
+    /* 5. SCHEDULE (XÓA GẠCH CHÂN) */
+    .date-btn, .time-slot { text-decoration: none !important; }
+    .active-theater { background-color: #ff69b4 !important; color: white !important; }
+    .date-btn.active { background:#DEFE98; color: #000; font-weight:bold; }
+    
