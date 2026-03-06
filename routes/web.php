@@ -14,11 +14,6 @@ use App\Http\Controllers\Admin\BookingController as AdminBookingController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Web\MovieController as AdminMovieController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-*/
 
 // Login
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -44,12 +39,8 @@ Route::get('/movies/{id}', [MovieController::class, 'show'])->name('movies.show'
 // --- BOOKING ---
 Route::middleware('auth')->group(function () {
     
-    // 1. ĐƯA COMBO LÊN TRÊN ĐẦU (Để không bị lỗi 404)
     Route::get('/booking/combo', [BookingController::class, 'combo'])->name('booking.combo');
-
-    // 2. ĐƯA {showtimeId} XUỐNG DƯỚI
     Route::get('/booking/{showtimeId}', [BookingController::class, 'create'])->name('booking.create');
-    
     Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
 });
 // --- PROFILE ---
@@ -61,11 +52,8 @@ Route::middleware('auth')->group(function () {
 
 
 Route::get('/reviews', [MovieController::class, 'index'])->name('review.index');
-// Thay 'TheaterController' bằng tên Controller thật của cậu
 Route::get('/schedule', [TheaterController::class, 'showSchedule'])->name('schedule.show');
-
 Route::get('/theaters', [TheaterController::class, 'index'])->name('theaters.index');
-// Route xem lịch chiếu của một rạp cụ thể
 Route::get('/theaters/{id}/schedule', [TheaterController::class, 'showSchedule'])->name('theaters.schedule');
 //ADMIN
 Route::prefix('admin')
