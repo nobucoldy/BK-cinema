@@ -227,7 +227,6 @@
         icon.classList.toggle('bi-eye'); icon.classList.toggle('bi-eye-slash');
     }
 
-    // Logic xử lý Phone & Password giữ nguyên như cũ
     const phone = document.getElementById('phone');
     const phone_info = document.getElementById('phone_info');
     phone.addEventListener('focus', () => phone_info.classList.add('active'));

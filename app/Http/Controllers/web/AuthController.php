@@ -16,7 +16,6 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        // 1. Validate đầu vào
         $request->validate([
             'login_field' => ['required'],
             'password' => ['required'],
@@ -27,7 +26,6 @@ class AuthController extends Controller
 
         $loginValue = $request->input('login_field');
         
-        // 2. Auto-detect whether Email or Phone
         $fieldType = filter_var($loginValue, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
 
         $credentials = [
@@ -35,25 +33,21 @@ class AuthController extends Controller
             'password' => $request->password,
         ];
 
-        // 3. Perform login
         if (Auth::attempt($credentials, $request->has('remember'))) {
             $request->session()->regenerate();
 
             $user = Auth::user();
 
-            // If ADMIN → admin panel
             if ($user->role === 'admin') {
                 return redirect()->route('admin.dashboard')
                     ->with('success', "Welcome Admin {$user->name}!");
             }
 
-            // If USER → user page
             return redirect('/')
                 ->with('success', "Hello {$user->name}, welcome to BK Cinema!");
         }
 
 
-        // If login fails
         return back()->withErrors([
             'login_field' => 'Login credentials or password is incorrect.',
         ])->withInput($request->only('login_field', 'remember'));
@@ -80,9 +74,9 @@ class AuthController extends Controller
             'phone' => [
             'required', 
             'numeric', 
-            'digits:10',                // Matches "Correct 10 digits"
-            'regex:/^(03|05|07|08|09)/', // Matches "Vietnamese area code"
-            'unique:users,phone'        // Ensure no duplicate numbers
+            'digits:10',
+            'regex:/^(03|05|07|08|09)/',
+            'unique:users,phone'
             ],
             'password' => ['required', 'confirmed', 'min:8'],
         ], [

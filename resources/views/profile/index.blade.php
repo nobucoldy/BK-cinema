@@ -332,13 +332,11 @@
 </div>
 
 <script>
-    // Preview image
     document.getElementById('avatar-input').onchange = evt => {
         const [file] = document.getElementById('avatar-input').files
         if (file) { document.getElementById('avatar-preview').src = URL.createObjectURL(file) }
     }
 
-    // Hàm đóng Toast
     function closeProfileToast() {
         const alert = document.getElementById('profileAlert');
         if (alert) {
@@ -349,14 +347,12 @@
         }
     }
 
-    // Auto hide after 3 seconds
     document.addEventListener('DOMContentLoaded', function () {
         if (document.getElementById('profileAlert')) {
             setTimeout(closeProfileToast, 3000);
         }
     });
 
-    // Toggle Password
     document.querySelectorAll('.password-toggle').forEach(toggle => {
         toggle.addEventListener('click', function() {
             const input = this.parentElement.querySelector('input');

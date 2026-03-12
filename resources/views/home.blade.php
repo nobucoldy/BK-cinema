@@ -218,7 +218,6 @@
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // --- 1. Banner Hero ---
         const heroSwiper = new Swiper(".heroSwiper", {
             loop: true, speed: 1000,
             pagination: { el: ".heroSwiper .swiper-pagination", clickable: true },
@@ -226,42 +225,33 @@
         document.querySelector('.nav-prev').addEventListener('click', () => heroSwiper.slidePrev());
         document.querySelector('.nav-next').addEventListener('click', () => heroSwiper.slideNext());
 
-        // --- 2. Cấu hình chung cho phim ---
         const commonConfig = {
             slidesPerView: 4, spaceBetween: 20, loop: true,
             pagination: { clickable: true },
             breakpoints: { 1024: { slidesPerView: 4 }, 768: { slidesPerView: 3 }, 0: { slidesPerView: 1.5 } }
         };
 
-        // --- 3. Now Showing ---
         new Swiper(".mySwiper", {
             ...commonConfig,
             pagination: { el: ".mySwiper .swiper-pagination", clickable: true },
             navigation: { nextEl: ".main-next", prevEl: ".main-prev" },
         });
 
-        // --- 4. Coming Soon ---
         new Swiper(".mySwiperUpcoming", {
             ...commonConfig,
             pagination: { el: ".mySwiperUpcoming .swiper-pagination", clickable: true },
             navigation: { nextEl: ".upcoming-next", prevEl: ".upcoming-prev" },
         });
 
-        // --- 5. Search Theater (Dùng ID chuẩn) ---
         const searchInput = document.getElementById('theaterSearch');
         if (searchInput) {
     searchInput.addEventListener('input', function(e) {
-        // Lấy từ khóa cậu gõ và chuyển thành chữ thường
         let term = e.target.value.toLowerCase().trim();
-        
-        // Tìm tất cả các item rạp trong danh sách
         let theaterItems = document.querySelectorAll('.theater-item');
 
         theaterItems.forEach(item => {
-            // Lấy tên rạp bên trong thẻ span (hoặc toàn bộ text của item)
             let theaterName = item.innerText.toLowerCase();
 
-            // Nếu tên rạp có chứa từ khóa thì hiện (flex), không thì ẩn (none)
             if (theaterName.includes(term)) {
                 item.style.setProperty('display', 'flex', 'important');
             } else {
@@ -271,7 +261,6 @@
     });
 }
 
-        // --- 6. AJAX Schedule ---
         const scheduleCard = document.querySelector('.schedule-card');
         if (scheduleCard) {
             scheduleCard.addEventListener('click', function(e) {

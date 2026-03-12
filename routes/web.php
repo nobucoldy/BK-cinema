@@ -15,28 +15,20 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Web\MovieController as AdminMovieController;
 
 
-// Login
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
-// Register
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 
-// Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// --- MOVIE ROUTES ---
 Route::get('/movies', [MovieController::class, 'index'])->name('movies.index');
 Route::get('/movies/upcoming', [MovieController::class, 'upcoming'])->name('movies.upcoming');
 Route::get('/movies/status', [MovieController::class, 'showing'])->name('movies.status');
 
-// Phải để cái {id} này ở dưới cùng của nhóm movies
 Route::get('/movies/{id}', [MovieController::class, 'show'])->name('movies.show');
-
-
-// --- BOOKING ---
 Route::middleware('auth')->group(function () {
 
     Route::get('/booking/combo', [BookingController::class, 'combo'])->name('booking.combo');
@@ -46,7 +38,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/booking/{showtimeId}', [BookingController::class, 'create'])->name('booking.create');
     Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
 });
-// --- PROFILE ---
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::post('/profile/update', [ProfileController::class, 'updateInfo'])->name('profile.update');
@@ -58,7 +49,7 @@ Route::get('/reviews', [MovieController::class, 'index'])->name('review.index');
 Route::get('/schedule', [TheaterController::class, 'showSchedule'])->name('schedule.show');
 Route::get('/theaters', [TheaterController::class, 'index'])->name('theaters.index');
 Route::get('/theaters/{id}/schedule', [TheaterController::class, 'showSchedule'])->name('theaters.schedule');
-//ADMIN
+
 Route::prefix('admin')
     ->middleware(['auth', 'admin'])
     ->name('admin.')

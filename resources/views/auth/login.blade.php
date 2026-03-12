@@ -246,7 +246,6 @@
 </div>
 
 <script>
-    // LOGIC CHO COMING SOON
     function showComingSoon() {
         document.getElementById('comingSoonModal').style.display = 'flex';
     }
@@ -255,7 +254,6 @@
         document.getElementById('comingSoonModal').style.display = 'none';
     }
 
-    // LOGIC CŨ CỦA CẬU
     const togglePassword = document.querySelector('#togglePassword');
     const password = document.querySelector('#password');
     togglePassword.addEventListener('click', function () {
