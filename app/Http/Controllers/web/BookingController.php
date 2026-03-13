@@ -123,15 +123,8 @@ class BookingController extends Controller
             foreach ($request->seat_ids as $seatId) {
                 $seat = $showtime->room->seats->where('id', $seatId)->first();
 
-                // Xác định giá ghế dựa trên seat_type
-                $price = 36000; // default regular
-                if ($seat) {
-                    if (strpos($seat->seat_code, 'L') === 0) {
-                        $price = 90000; // Couple seats
-                    } elseif (in_array($seat->seat_code[0], ['D', 'E', 'F', 'G', 'H'])) {
-                        $price = 49000; // VIP seats
-                    }
-                }
+                // calculate price using model helper (includes extra)
+                $price = $seat ? $seat->priceForShowtime($showtime) : (config('prices.regular') + ($showtime->screeningType->extra_price ?? 0));
 
                 // Tạo booking seat
                 BookingSeat::create([

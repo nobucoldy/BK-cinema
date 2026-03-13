@@ -17,4 +17,23 @@ class Seat extends Model
     {
         return $this->belongsTo(Room::class);
     }
+
+    /**
+     * Compute ticket price for this seat given a showtime.
+     * Takes base prices from config and adds screening type extra.
+     */
+    public function priceForShowtime($showtime)
+    {
+        $base = config('prices.regular');
+        $extra = $showtime->screeningType->extra_price ?? 0;
+
+        // couple seats defined by code starting with I
+        if (strpos($this->seat_code, 'I') === 0) {
+            $base = config('prices.couple');
+        } elseif (in_array($this->seat_code[0], ['D','E','F','G','H'])) {
+            $base = config('prices.vip');
+        }
+
+        return $base + $extra;
+    }
 }

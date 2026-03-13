@@ -61,6 +61,13 @@
         .seat-grid { display: flex; flex-direction: column; align-items: center; gap: 15px; }
         .seat-row { display: flex; gap: 8px; align-items: center; }
         .seat-row .seat:nth-child(3), .seat-row .seat:nth-child(8) { margin-right: 35px; }
+        /* special layout for couple row: match width of normal rows and spread seats evenly */
+        .seat-row-double { 
+            width: 542px; /* equals 10*40 + 9*8 + 2*35 */
+            justify-content: space-between;
+        }
+        /* ensure sold double seats keep their wider size */
+        .seat-double.seat-sold { width: 90px; height: 40px; }
 
         /* SEAT STYLES - ĐÃ CẬP NHẬT KÍCH THƯỚC GHẾ ĐÔI */
         .seat { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; cursor: pointer; transition: 0.2s; }
@@ -169,27 +176,30 @@
         </div>
 @php
     $extra = $showtime->screeningType->extra_price ?? 0;
+    $priceRegular = config('prices.regular');
+    $priceVip     = config('prices.vip');
+    $priceCouple  = config('prices.couple');
 @endphp
         <div class="seat-legend">
             <div class="legend-item">
     <div class="legend-label">
         <div class="seat-demo seat-normal"></div>Regular
     </div>
-    <div class="legend-price">{{ number_format(36000 + $extra) }}đ</div>
+    <div class="legend-price">{{ number_format($priceRegular + $extra) }}đ</div>
 </div>
 
 <div class="legend-item">
     <div class="legend-label">
         <div class="seat-demo seat-vip"></div>VIP
     </div>
-    <div class="legend-price">{{ number_format(49000 + $extra) }}đ</div>
+    <div class="legend-price">{{ number_format($priceVip + $extra) }}đ</div>
 </div>
 
 <div class="legend-item">
     <div class="legend-label">
         <div class="seat-demo seat-double"></div>Couple
     </div>
-    <div class="legend-price">{{ number_format(90000 + $extra) }}đ</div>
+    <div class="legend-price">{{ number_format($priceCouple + $extra) }}đ</div>
 </div>
 <div class="legend-item"><div class="legend-label"><div class="seat-demo" style="background:#1a1a1a"></div>Selected</div></div>
             <div class="legend-item"><div class="legend-label"><div class="seat-demo seat-sold"></div>Sold</div></div>
@@ -200,12 +210,15 @@
                 <div class="screen-container"><div class="screen"></div><div class="screen-text">SCREEN</div></div>
                 <div class="seat-grid" id="seat-grid">
                     @php 
+                        use App\Models\Seat;
                         $rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']; 
                         $normalRows = ['A', 'B', 'C']; 
                         $soldSeatCodes = $soldSeatCodes ?? []; 
                         $seatMap = []; 
+                        $seatPrices = [];
                         foreach($showtime->room->seats as $seat) {
                             $seatMap[$seat->seat_code] = $seat->id;
+                            $seatPrices[$seat->seat_code] = $seat->priceForShowtime($showtime);
                         }
                     @endphp
                     
@@ -217,8 +230,9 @@
                                     $code = $row . sprintf("%02d", $i); 
                                     $isNormal = in_array($row, $normalRows); 
                                     $type = $isNormal ? 'seat-normal' : 'seat-vip'; 
-                                    $basePrice = $isNormal ? 36000 : 49000;
-                                    $price = $basePrice + $showtime->screeningType->extra_price;
+                                    $basePrice = $isNormal ? $priceRegular : $priceVip;
+                                    // use precomputed price to ensure consistency
+                                    $price = $seatPrices[$code] ?? ($basePrice + $showtime->screeningType->extra_price);
                                     $isSold = in_array($code, $soldSeatCodes); 
                                     $seatId = $seatMap[$code] ?? null;
                                 @endphp
@@ -232,18 +246,19 @@
                     @endforeach
 
                     {{-- GHẾ ĐÔI - DÒNG CUỐI CÙNG --}}
-                    <div class="seat-row mt-4">
+                    <div class="seat-row seat-row-double mt-4">
                         @for($i=1; $i<=5; $i++)
                             @php 
-                                $code = "L" . sprintf("%02d", $i); 
-                                $price = 90000 + $showtime->screeningType->extra_price;
+                                // last row code uses letter I (not L) to match seats seeded
+                                $code = "I" . sprintf("%02d", $i); 
+                                $price = $seatPrices[$code] ?? (90000 + $showtime->screeningType->extra_price);
                                 $isSold = in_array($code, $soldSeatCodes); 
                                 $seatId = $seatMap[$code] ?? null;
                             @endphp
                             @if($seatId)
-                                <div class="seat {{ $isSold ? 'seat-sold' : 'seat-double' }}" data-id="{{ $seatId }}" data-name="{{ $code }}" data-price="{{ $price }}">{{ $code }}</div>
+                                <div class="seat seat-double{{ $isSold ? ' seat-sold' : '' }}" data-id="{{ $seatId }}" data-name="{{ $code }}" data-price="{{ $price }}">{{ $code }}</div>
                             @else
-                                <div class="seat seat-sold" style="width: 88px;">{{ $code }}</div>
+                                <div class="seat seat-double seat-sold" style="width: 88px;">{{ $code }}</div>
                             @endif
                         @endfor
                     </div>

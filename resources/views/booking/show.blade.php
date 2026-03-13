@@ -311,7 +311,8 @@
                             <div class="seat-type">
                                 @php
                                     $seatCode = $bookingSeat->seat->seat_code;
-                                    if (strpos($seatCode, 'L') === 0) {
+                                    // letter I indicates couple seats now
+                                    if (strpos($seatCode, 'I') === 0) {
                                         echo 'Couple Seat';
                                     } elseif (in_array($seatCode[0], ['D', 'E', 'F', 'G', 'H'])) {
                                         echo 'VIP';

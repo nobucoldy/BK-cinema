@@ -40,10 +40,8 @@
 
     <div class="mb-3">
         <label>Role</label>
-        <select name="role" class="form-control">
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-        </select>
+        <input type="text" class="form-control" value="User" disabled>
+        <small class="text-muted">New accounts are always created as users.</small>
     </div>
 
     <button class="btn btn-success">Create</button>

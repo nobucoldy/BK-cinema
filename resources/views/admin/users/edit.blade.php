@@ -50,14 +50,8 @@
 
         <div class="mb-3">
             <label class="form-label">Role</label>
-            <select name="role" class="form-control" required>
-                <option value="user" {{ $user->role=='user'?'selected':'' }}>
-                    User
-                </option>
-                <option value="admin" {{ $user->role=='admin'?'selected':'' }}>
-                    Admin
-                </option>
-            </select>
+            <input type="text" class="form-control" value="{{ ucfirst($user->role) }}" disabled>
+            <small class="text-muted"></small>
         </div>
 
         <div class="d-flex gap-2">

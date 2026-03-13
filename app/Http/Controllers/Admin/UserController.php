@@ -45,14 +45,13 @@ class UserController extends Controller
             'email'    => 'required|email|unique:users,email',
             'phone'    => ['nullable','regex:/^\+?[0-9\s\-]{9,15}$/'], // optional, hỗ trợ +84
             'password' => 'required|string|min:6',
-            'role'     => 'required|in:user,admin',
         ]);
 
         User::create([
             'name'     => $request->name,
             'email'    => $request->email,
             'phone'    => $request->phone,
-            'role'     => $request->role,
+            'role'     => 'user',
             'password' => bcrypt($request->password),
         ]);
 
@@ -89,12 +88,11 @@ class UserController extends Controller
         $request->validate([
             'name'  => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
-            'role'  => 'required|in:admin,user',
             'phone' => 'nullable|regex:/^[0-9]{9,11}$/', // validate phone
         ]);
 
-        // add 'phone' here
-        $user->update($request->only('name','email','role','phone'));
+        // do not allow role changes via admin UI
+        $user->update($request->only('name','email','phone'));
 
         return redirect()->route('admin.users.index')
             ->with('success', 'Update successful');
